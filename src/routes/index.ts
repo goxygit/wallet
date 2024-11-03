@@ -3,10 +3,10 @@ import { userRouter } from "./userRouters";
 import { transactionRouter } from "./transactionRouters";
 import { categoryRouter } from "./categoryRouters";
 
-const router = Router({})
+const router = Router({});
 
-router.use('/user', userRouter)
-router.use('/transaction', transactionRouter)
-router.use('/category',categoryRouter)
+router.use("/user", userRouter);
+router.use("/transaction", transactionRouter);
+router.use("/category", categoryRouter);
 
-export {router}
+export { router };

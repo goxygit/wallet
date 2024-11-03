@@ -26,8 +26,12 @@ export const registration = async(req: Request,res:Response)=>{
         const token = await generateJWT({id: user.id, email})
 
 
-        return res.json({user, token})
-    }
+        res.cookie('Authorization', token, {
+            maxAge: 3600000 * 24 * 7, // 7 дней
+        httpOnly: true,  // Предотвращает отправку куки с других сайтов (защита от CSRF)
+          });
+          return res.json({token, user})
+        }
     catch(e){
 
     }
@@ -47,14 +51,26 @@ export const login = async(req: Request,res:Response)=>{
 
     const token = await generateJWT({email, id: user.id})
 
-    return res.json({token})
-}
+
+    res.cookie('Authorization', token, {
+        maxAge: 3600000 * 24 * 7, // 7 дней
+        httpOnly: true, // Предотвращает отправку куки с других сайтов (защита от CSRF)
+      });
+      return res.json({token, user})
+    }
+
 export const getMe = async(req: Request,res:Response)=>{
     const {user} = req
 
 
     if(user){
     const token = await generateJWT({id: user.id, email: user.email})
+    
 
-    res.json({token})}
+    res.cookie('Authorization', token, {
+        maxAge: 3600000 * 24 * 7, // 7 дней
+        httpOnly: true,  // Предотвращает отправку куки с других сайтов (защита от CSRF)
+  });
+  return res.json({token, user})
+}
 }

@@ -12,10 +12,12 @@ export type UserType ={
 
 export const authMiddleware = async(req:Request, res:Response, next:NextFunction)=>{
     try{
-        const token = req.headers.authorization?.split(' ')[1]
-        if(!token)
+        const token = req.cookies.Authorization
+        if(!token){
             return res.status(401).json({message:'Unauthorized'})
-        
+        }
+        console.log(token)
+        //@ts-ignore
         const decoded = jwt.verify(token, secret )
         //@ts-ignore
         req.user = decoded
